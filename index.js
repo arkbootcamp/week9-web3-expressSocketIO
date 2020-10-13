@@ -31,10 +31,10 @@ io.on("connection", (socket) => {
   })
 
   socket.on("welcomeMessage", (data) => {
-    socket.emit("chatMessage", {
-      username: "BOT",
-      message: `Welcome Back ${data.username} !`,
-    })
+    // socket.emit("chatMessage", {
+    //   username: "BOT",
+    //   message: `Welcome Back ${data.username} !`,
+    // })
     // GLOBAL
     // socket.broadcast.emit("chatMessage", {
     //   username: "BOT",
@@ -42,10 +42,15 @@ io.on("connection", (socket) => {
     // })
     // SPESIFIK
     socket.join(data.room)
-    socket.broadcast.to(data.room).emit("chatMessage", {
-      username: "BOT",
-      message: `${data.username} Joined Chat !`,
-    })
+    // socket.broadcast.to(data.room).emit("chatMessage", {
+    //   username: "BOT",
+    //   message: `${data.username} Joined Chat !`,
+    // })
+  })
+  socket.on("changeRoom", (data) => {
+    // console.log(data);
+    socket.leave(data.oldRoom)
+    socket.join(data.newRoom)
   })
 
   socket.on("typing", (data) => {
